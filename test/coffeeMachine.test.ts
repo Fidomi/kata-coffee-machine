@@ -33,4 +33,16 @@ describe('Order', () => {
     const order1 = new Order({ drink: 'C', sugar: 2 }, 60);
     expect(order1.orderDisplay()).toBe('C:2:0');
   });
+  test('should return "T::" if you ordered one tea and give 40 cents', () => {
+    const order1 = new Order({ drink: 'T' }, 40);
+    expect(order1.orderDisplay()).toBe('T::');
+  });
+  test('should return "M:Missing 20 cents" if you ordered one tea and give 20 cents', () => {
+    const order1 = new Order({ drink: 'T' }, 20);
+    expect(order1.orderDisplay()).toBe('M:Missing 20 cents');
+  });
+  test('should return "O::" if you ordered orange juice', () => {
+    const order1 = new Order({ drink: 'O' }, 60);
+    expect(order1.orderDisplay()).toBe('O::');
+  });
 });

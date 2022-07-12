@@ -1,4 +1,4 @@
-type Drink = 'T'|'C'|'H';
+type Drink = 'T'|'C'|'H'|'O';
 type Sugar = null | number;
 export type Choice = {
   drink: Drink;
@@ -24,18 +24,21 @@ export class Order implements OrderType {
   }
 
   findPrice(drink : Drink) {
-    if (drink === 'C') {
-      return 0.6;
+    if (drink === 'C' || drink === 'O') {
+      return 60;
     } if (drink === 'T') {
-      return 0.4;
+      return 40;
     }
-    return 0.5;
+    return 50;
   }
 
   orderDisplay() {
     let isEnoughMoney = true;
     switch (this.order.drink) {
       case 'C':
+        isEnoughMoney = this.amountMoney >= 60;
+        break;
+      case 'O':
         isEnoughMoney = this.amountMoney >= 60;
         break;
       case 'T':
@@ -46,7 +49,7 @@ export class Order implements OrderType {
     }
     const display = isEnoughMoney
       ? `${this.order.drink}:${this.order.sugar ? this.order.sugar : ''}:${this.order.sugar ? 0 : ''}`
-      : '';
+      : `M:Missing ${this.price - this.amountMoney} cents`;
     return display;
   }
 }
