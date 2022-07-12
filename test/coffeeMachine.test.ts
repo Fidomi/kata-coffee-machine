@@ -45,4 +45,12 @@ describe('Order', () => {
     const order1 = new Order({ drink: 'O' }, 60);
     expect(order1.orderDisplay()).toBe('O::');
   });
+  test('should return "Th:2:0" if you ordered extra hot tea with 2 sugars', () => {
+    const order1 = new Order({ drink: 'T', sugar: 2 }, 60, true);
+    expect(order1.orderDisplay()).toBe('Th:2:0');
+  });
+  test('should return "Hh:1:0" if you ordered extra hot tea with 1 sugar', () => {
+    const order1 = new Order({ drink: 'H', sugar: 1 }, 60, true);
+    expect(order1.orderDisplay()).toBe('Hh:1:0');
+  });
 });

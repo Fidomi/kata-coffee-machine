@@ -2,12 +2,13 @@ type Drink = 'T'|'C'|'H'|'O';
 type Sugar = null | number;
 export type Choice = {
   drink: Drink;
-  sugar?: Sugar
+  sugar?: Sugar;
 }
 interface OrderType {
   order : Choice;
   price : number;
   amountMoney : number;
+  isExtraHot : boolean ;
 }
 
 export class Order implements OrderType {
@@ -17,10 +18,13 @@ export class Order implements OrderType {
 
   amountMoney : number;
 
-  constructor(order: Choice, amountMoney : number) {
+  isExtraHot : boolean;
+
+  constructor(order: Choice, amountMoney : number, isExtraHot : boolean = false) {
     this.order = order;
     this.price = this.findPrice(this.order.drink);
     this.amountMoney = amountMoney;
+    this.isExtraHot = isExtraHot;
   }
 
   findPrice(drink : Drink) {
@@ -47,8 +51,9 @@ export class Order implements OrderType {
       default:
         isEnoughMoney = this.amountMoney >= 50;
     }
+    const drinkName = this.isExtraHot ? `${this.order.drink}h` : `${this.order.drink}`;
     const display = isEnoughMoney
-      ? `${this.order.drink}:${this.order.sugar ? this.order.sugar : ''}:${this.order.sugar ? 0 : ''}`
+      ? `${drinkName}:${this.order.sugar ? this.order.sugar : ''}:${this.order.sugar ? 0 : ''}`
       : `M:Missing ${this.price - this.amountMoney} cents`;
     return display;
   }
